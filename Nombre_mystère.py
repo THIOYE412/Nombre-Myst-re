@@ -1,34 +1,38 @@
 """ LE JEU DU NOMBRE MYSTERE """
 
-import random
+# SOLUTION
+from random import randint
 
-print("*** LE JEU DU NOMBRE MYSTERE ***\n")
-Nbre_essais = 5
-N_e = 0
-Nbre_mystere = random.randrange(0, 101)
+number_to_find = randint(0, 100)
+remaining_attemps = 5
 
-# BOUCLE PRINCIPALE
+print("*** Le jeu du nombre mystère ***")
 
-while True:
-	essai = print(f"Il te reste {Nbre_essais} essai(s)") 
+# Boucle principale
+while remaining_attemps > 0:
+	print(f"Il te reste {remaining_attemps} essai{'s' if remaining_attemps > 1 else ''}")
 
-	if Nbre_essais == 0:
-		print(f"Dommage 😞! Le nombre mystère était {Nbre_mystere}")
-		break
-	MYSTERE = input("Devine le nombre : ")
-	if not MYSTERE.isdigit():
-		print("Veuillez entrez un nombre valide")
+	# Saisie de l'utilisateur
+	user_choice = input("Devine le nombre : ")
+	if not user_choice.isdigit():
+		print("Veuillez entrer un nombre valide.")
 		continue
-	elif MYSTERE.isdigit():
-		N_e += 1 
-		if int(MYSTERE) == Nbre_mystere:
-			print(f"Bravo 👏🥳! Le nombre mystère était bien {MYSTERE}.")
-			print("Tu as trouvé le nombre en {N_e} essai(s).")
-			break
-		elif int(MYSTERE) > Nbre_mystere:
-			print(f"Le nombre mystère est plus petit que {MYSTERE}")
-		elif int(MYSTERE) < Nbre_mystere:
-			print(f"Le nombre mystère est plus grand que {MYSTERE}")
-	Nbre_essais -= 1
+	user_choice = int(user_choice)
 
-print("Fin du jeu 🙂 !")
+	if number_to_find > user_choice:	# Plus grand
+		print(f"Le nombre mystère est plus grand que {user_choice}")
+	elif number_to_find < user_choice:	# Plus petit
+		print(f"Le nombre mystère est plus petit que {user_choice}")
+	else:	#Egal (succès)
+		break
+
+	remaining_attemps -= 1
+
+# Gagné ou perdu
+if remaining_attemps == 0:
+	print(f"Dommage 😞! Le nombre mystère était {number_to_find}")
+else:
+	print(f"Bravo 🥳! Le nombre mystère était bien {number_to_find} !")
+	print(f"Tu as trouvé le nombre en {6 - remaining_attemps} essai(s)")
+
+print("Fin du jeu 🙂.")
